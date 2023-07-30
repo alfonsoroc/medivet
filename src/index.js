@@ -21,16 +21,23 @@ app.on('ready', () => {
 
    const mainMenu =  Menu.buildFromTemplate(templateMneu);
    Menu.setApplicationMenu(mainMenu)
+   mainWindow.on('closed',()=>{
+        app.quit();
+   })
   });
 
 function createNewUserWindows(){
    newUserWindows = new BrowserWindow({
-        width:400,
+        width:500,
         height:300,
         title:'Agregar nuevo usuario'
     });
     newUserWindows.setMenu(null);
     newUserWindows.loadFile(path.join(__dirname,'views/adduser.html'));
+
+    newUserWindows.on('closed',() => {
+        newUserWindows = null;
+    })
 }
 
 
@@ -50,8 +57,19 @@ function createNewUserWindows(){
                 click(){
                     createNewUserWindows();
                 }
+            },
+            {
+                label:'Remover Usuarios',
+            },
+            {
+                label:'Exit',
+                accelerator:'Ctrl+Q',
+                click(){
+                    app.quit();
+                }
             }
         ]
-    }
+    },
+   
 
   ];
